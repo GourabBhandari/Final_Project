@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Tech Scanner</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Web Tech Scanner</h1>
+        <form method="post">
+            <input type="text" name="url" placeholder="Enter URL to Scanning">
+            <input type="submit" value="Search">
+        </form>
+        {% if result %}
+            <div class="results">
+                <h2>Web Tech Scanner</h2>
+                <ul>
+                {% for key, value in result.items() %}
+                    <li>
+                        <strong>{{ key }}:</strong>
+                        {% for tech in value.split(', ') %}
+                            {% if tech in tech_images %}
+                                <img src="{{ tech_images[tech] }}" alt="{{ tech }}" width="20" height="20">
+                            {% endif %}
+                            {{ tech }}
+                        {% endfor %}
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        <div class="logout">
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+</body>
+</html>
